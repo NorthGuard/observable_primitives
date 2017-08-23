@@ -4,7 +4,7 @@ from observable_primitives.observables.numeric_base import ObservableNumeric
 
 
 class ObservableInteger(ObservableNumeric):
-    def __init__(self, val=0, incorrect_type_handler="round"):
+    def __init__(self, val=0, final_value=None, incorrect_type_handler="round"):
         """
         An integer which is observable.
         All methods and operations that work on integer should work on this class and have identical behavior.
@@ -15,6 +15,7 @@ class ObservableInteger(ObservableNumeric):
         """
         super().__init__(val=int(val))
         self._incorrect_type_policy = incorrect_type_handler
+        self.final_value = final_value
 
     # Unary
 
@@ -165,6 +166,9 @@ class ObservableInteger(ObservableNumeric):
     # Added specials
 
     def range(self, *args):
+        if len(args) == 1:
+            self.final_value = args[0] - 1
+        else:
+            self.final_value = args[1] - 1
         for i in range(*args):
             yield self.set(i, method="range")
-
