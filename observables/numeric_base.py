@@ -203,7 +203,7 @@ class ObservableNumeric(Observable):
 
     # Direct setter
 
-    def set(self, val):
+    def set(self, val, method="set"):
         previous = self._val
         self._val = val
-        return self._ireturn(method="set", other=val, previous=previous)
+        return self._ireturn(method=method, other=val, previous=previous)

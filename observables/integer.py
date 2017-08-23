@@ -161,3 +161,10 @@ class ObservableInteger(ObservableNumeric):
 
     def to_bytes(self, length, byteorder, *, signed):
         return self._val.to_bytes(length=length, byteorder=byteorder, signed=signed)
+
+    # Added specials
+
+    def range(self, *args):
+        for i in range(*args):
+            yield self.set(i, method="range")
+

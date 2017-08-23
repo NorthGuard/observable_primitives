@@ -117,6 +117,5 @@ if __name__ == "__main__":
                                              at_relative=.5)
 
     print(f"Counter {obs_int:3d}, condition {bool(int_condition)!r:5s}, reason {int_condition._reason}")
-    for _ in range(12):
-        obs_int += 1
+    for i in obs_int.range(12):
         print(f"Counter {obs_int:3d}, condition {bool(int_condition)!r:5s}, reason {int_condition._reason}")
