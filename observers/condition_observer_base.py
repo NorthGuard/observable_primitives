@@ -42,6 +42,27 @@ class ConditionObserver(Observer, Observable):
         str2 = f"{self.status} ; {self.reason}" if self.status else "False"
         return str1.format(str2)
 
+    def _relevant_settings_names(self):
+        raise NotImplementedError
+
+    def __str__(self):
+        return self.describe()
+
+    def __repr__(self):
+        return str(self)
+
+    def describe(self):
+        names = self._relevant_settings_names()  # list[str]
+
+        string = []
+        for name in names:
+            val = getattr(self, name)
+            string.append(f"{name.strip('_')}={val}")
+
+        name_string = "" if self.name is None else f"'{self.name}', "
+        string = type(self).__name__ + "(" + name_string + ", ".join(string) + ")"
+        return string
+
 
 class MultiConditionObserver(ConditionObserver):
     def __init__(self, observable1, observable2, operator, name=None):
@@ -60,6 +81,15 @@ class MultiConditionObserver(ConditionObserver):
 
     def __iadd__(self, other):
         return self.__add__(other)
+
+    def _relevant_settings_names(self):
+        raise NotImplementedError
+
+    def describe(self):
+        name_string = "" if self.name is None else f"'{self.name}'"
+        str1 = type(self).__name__ + "(" + name_string + ", {})"
+        str2 = f"{self._observable1.describe()} {self._operator} {self._observable2.describe()}"
+        return str1.format(str2)
 
     def _update_status(self, *args, **kwargs):
         if self._operator == "and":

@@ -3,7 +3,7 @@ from observable_primitives.observers.condition_observer_base import ConditionObs
 
 class IntegerConditionObserver(ConditionObserver):
     def __init__(self, name=None, observable=None,
-                 divisible_by=None,
+                 if_divisible_by=None,
                  if_less_than=None, if_more_than=None,
                  at_specific_value=None
                  ):
@@ -11,15 +11,16 @@ class IntegerConditionObserver(ConditionObserver):
         Watches an observable integer for various conditions.
         Silently keeps its internal status and provides it if needed.
 
+        :param str name: Name of observer.
         :param ObservableInteger observable: Observable integers to watch.
-        :param int | list[int] divisible_by:
+        :param int | list[int] if_divisible_by:
         :param int if_less_than:
         :param int if_more_than:
         :param int | list[int] at_specific_value:
         """
         super().__init__(name=name, default=False, observables=observable)
-        self._divisible_by = divisible_by if (isinstance(divisible_by, list) or divisible_by is None) \
-            else [divisible_by]
+        self._if_divisible_by = if_divisible_by if (isinstance(if_divisible_by, list) or if_divisible_by is None) \
+            else [if_divisible_by]
         self._if_less_than = if_less_than
         self._if_more_than = if_more_than
         self._at_specific_value = at_specific_value if isinstance(at_specific_value, list) \
@@ -32,6 +33,12 @@ class IntegerConditionObserver(ConditionObserver):
     def _initialize(self):
         self._update_status(new_val=self._observable.val, method="ObserverInitialize", other=None, previous=None)
 
+    def _relevant_settings_names(self):
+        names = ["_if_less_than", "_if_more_than", "_if_divisible_by", "_at_specific_value"]
+        relevant_names = [name for name in names
+                          if getattr(self, name) not in (None, [None])]
+        return relevant_names
+
     def _update_status(self, *, new_val, method, other, previous):
         # Specific iteration
         if self._at_specific_value is not None:
@@ -41,8 +48,8 @@ class IntegerConditionObserver(ConditionObserver):
                 return
 
         # Select iteration at specified iteration interval
-        if self._divisible_by is not None:
-            for div_val in self._divisible_by:
+        if self._if_divisible_by is not None:
+            for div_val in self._if_divisible_by:
                 if (new_val % div_val) == 0:
                     self._reason = f"Value {new_val} divisible by {div_val}"
                     self._status = True
@@ -72,12 +79,25 @@ class CounterConditionObserver(IntegerConditionObserver):
                  if_less_than=None, if_more_than=None,
                  at_specific_value=None,
                  first_val=0):
+        """
+        Like the IntegerConditionObserver but more focuses on counter or iterators.
+        :param str name: Name of observer.
+        :param ObservableInteger observable: Observable integers to watch.
+        :param at_every:
+        :param at_relative:
+        :param if_first_count:
+        :param if_last_count:
+        :param if_less_than:
+        :param if_more_than:
+        :param at_specific_value:
+        :param first_val:
+        """
         self.at_relative = at_relative if (isinstance(at_relative, float) or at_relative is None) \
             else 1. / float(at_relative)
         self.if_first_iteration = if_first_count
         self.if_last_count = if_last_count
         self.first_val = first_val
-        super().__init__(name=name, observable=observable, divisible_by=at_every, if_less_than=if_less_than,
+        super().__init__(name=name, observable=observable, if_divisible_by=at_every, if_less_than=if_less_than,
                          if_more_than=if_more_than, at_specific_value=at_specific_value)
 
     def _update_status(self, *, new_val, method, other, previous):

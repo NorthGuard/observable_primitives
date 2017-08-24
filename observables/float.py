@@ -17,16 +17,28 @@ class ObservableFloat(ObservableNumeric):
     def __pow__(self, power, modulo=None):
         return pow(self._val, power, modulo)
 
+    def __rpow__(self, power, modulo=None):
+        return pow(power, self._val, modulo)
+
     # Arithmetics: Divisions and Modulo
 
     def __floordiv__(self, other):
         return self._val // other
 
+    def __rfloordiv__(self, other):
+        return other // self._val
+
     def __mod__(self, other):
         return self._val % other
 
+    def __rmod__(self, other):
+        return other % self._val
+
     def __divmod__(self, other):
-        return self._val // other, self._val % other
+        return divmod(self._val, other)
+
+    def __rdivmod__(self, other):
+        return divmod(other, self._val)
 
     # Conversions
 

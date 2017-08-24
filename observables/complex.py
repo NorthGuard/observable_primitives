@@ -15,6 +15,11 @@ class ObservableComplex(ObservableNumeric):
     def __pow__(self, power):
         return self._val ** power
 
+    def __rpow__(self, power):
+        return power ** self._val
+
+    # Augmented arithmetics
+
     def __ipow__(self, other):
         previous = self._val
         self._val = self._val ** other

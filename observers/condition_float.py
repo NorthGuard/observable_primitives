@@ -1,4 +1,5 @@
 from observable_primitives.observers.condition_observer_base import ConditionObserver
+from observable_primitives.observables.float import ObservableFloat
 
 
 class FloatConditionObserver(ConditionObserver):
@@ -7,13 +8,33 @@ class FloatConditionObserver(ConditionObserver):
                  if_extreme_decrease_relative=None,
                  if_extreme_increase_absolute=None,
                  if_extreme_increase_relative=None):
+        """
+        Monitors an observable float.
+        Becomes True is the float moves beyond limits defined in initializer.
+        :param str name: Name of observer.
+        :param ObservableFloat observable: The ObservableFloat to be observed.
+        :param float if_less_than: Be True if float becomes more than this value.
+        :param float if_more_than: Be True if float becomes less than this value.
+        :param float if_extreme_decrease_absolute: Be True if ObservableFloat < -if_extreme_decrease_absolute +
+                                                   the lowest previously observed value.
+        :param float if_extreme_decrease_relative: Be True if ObservableFloat > (1 - if_extreme_decrease_relative) *
+                                                   the lowest previously observed value.
+        :param float if_extreme_increase_absolute: Be True if ObservableFloat > if_extreme_increase_absolute +
+                                                   the largest previously observed value.
+        :param float if_extreme_increase_relative: Be True if ObservableFloat > (1 + if_extreme_increase_relative) *
+                                                   the largest previously observed value.
+        """
         super().__init__(name=name, observables=observable)
-        self._if_less_than = float(if_less_than)
-        self._if_more_than = float(if_more_than)
-        self._if_extreme_decrease_absolute = float(if_extreme_decrease_absolute)
-        self._if_extreme_decrease_relative = float(if_extreme_decrease_relative)
-        self._if_extreme_increase_absolute = float(if_extreme_increase_absolute)
-        self._if_extreme_increase_relative = float(if_extreme_increase_relative)
+        self._if_less_than = if_less_than if if_less_than is None else float(if_less_than)
+        self._if_more_than = if_more_than if if_more_than is None else float(if_more_than)
+        self._if_extreme_decrease_absolute = if_extreme_decrease_absolute if if_extreme_decrease_absolute is None \
+            else float(if_extreme_decrease_absolute)
+        self._if_extreme_decrease_relative = if_extreme_decrease_relative if if_extreme_decrease_relative is None \
+            else float(if_extreme_decrease_relative)
+        self._if_extreme_increase_absolute = if_extreme_increase_absolute if if_extreme_increase_absolute is None \
+            else float(if_extreme_increase_absolute)
+        self._if_extreme_increase_relative = if_extreme_increase_relative if if_extreme_increase_relative is None \
+            else float(if_extreme_increase_relative)
 
         self._observable = observable
         self._max_extreme = None
@@ -24,6 +45,15 @@ class FloatConditionObserver(ConditionObserver):
 
     def _initialize(self):
         self._update_status(new_val=self._observable.val, method="ObserverInitialize", other=None, previous=None)
+
+    def _relevant_settings_names(self):
+        names = ["_if_less_than", "_if_more_than",
+                "_if_extreme_decrease_absolute", "_if_extreme_decrease_relative",
+                "_if_extreme_increase_absolute", "_if_extreme_increase_relative"]
+
+        relevant_names = [name for name in names
+                          if getattr(self, name) is not None]
+        return relevant_names
 
     def _update_status(self, *, new_val, method, other, previous):
         # Check for lower limit

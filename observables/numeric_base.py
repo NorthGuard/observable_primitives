@@ -49,39 +49,72 @@ class ObservableNumeric(Observable):
     def __add__(self, other):
         return self._val + other
 
+    def __radd__(self, other):
+        return other + self._val
+
     def __sub__(self, other):
         return self._val - other
+
+    def __rsub__(self, other):
+        return other - self._val
 
     def __mul__(self, other):
         return self._val * other
 
+    def __rmul__(self, other):
+        return other * self._val
+
     # def __matmul__(self, other):
     #     return self._val @ other
+    #
+    # def __rmatmul__(self, other):
+    #     return other @ self._val
 
     # def __pow__(self, power, modulo=None):
     #     return pow(self._val, power, modulo)
+    #
+    # def __rpow__(self, power, modulo=None):
+    #     return pow(power, self._val, modulo)
 
     # Arithmetics: Divisions and Modulo
 
     def __truediv__(self, other):
         return self._val / other
 
+    def __rtruediv__(self, other):
+        return other / self._val
+
     # def __floordiv__(self, other):
     #     return self._val // other
+    #
+    # def __rfloordiv__(self, other):
+    #     return other // self._val
     #
     # def __mod__(self, other):
     #     return self._val % other
     #
+    # def __rmod__(self, other):
+    #     return other % self._val
+    #
     # def __divmod__(self, other):
     #     return divmod(self._val, other)
+    #
+    # def __rdivmod__(self, other):
+    #     return divmod(other, self._val)
 
     # Arithmetics: Binary
 
     # def __lshift__(self, other):
     #     return self._val << other
     #
+    # def __rlshift__(self, other):
+    #     return other << self._val
+    #
     # def __rshift__(self, other):
     #     return self._val >> other
+    #
+    # def __rrshift__(self, other):
+    #     return other >> self._val
 
     # Boolean
 
@@ -91,11 +124,20 @@ class ObservableNumeric(Observable):
     # def __and__(self, other):
     #     return self._val & other
     #
+    # def __rand__(self, other):
+    #     return other & self._val
+    #
     # def __or__(self, other):
     #     return self._val | other
     #
+    # def __ror__(self, other):
+    #     return other | self._val
+    #
     # def __xor__(self, other):
     #     return self._val ^ other
+    #
+    # def __rxor__(self, other):
+    #     return other ^ self._val
 
     # Representation
 
