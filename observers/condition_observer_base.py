@@ -1,4 +1,4 @@
-from observable_primitives import Observer, Observable
+from observable_primitives.base import Observer, Observable
 
 
 class ConditionObserver(Observer, Observable):
@@ -60,6 +60,8 @@ class ConditionObserver(Observer, Observable):
             string.append(f"{name.strip('_')}={val}")
 
         name_string = "" if self.name is None else f"'{self.name}', "
+        if name_string == "":
+            name_string = "Never"
         string = type(self).__name__ + "(" + name_string + ", ".join(string) + ")"
         return string
 

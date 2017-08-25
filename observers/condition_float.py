@@ -1,5 +1,4 @@
 from observable_primitives.observers.condition_observer_base import ConditionObserver
-from observable_primitives.observables.float import ObservableFloat
 
 
 class FloatConditionObserver(ConditionObserver):

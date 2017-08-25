@@ -1,4 +1,4 @@
-from observable_primitives import Observer
+from observable_primitives.base import Observer
 
 
 class NumericPrintObserver(Observer):

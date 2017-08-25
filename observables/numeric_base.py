@@ -1,4 +1,4 @@
-from observable_primitives import Observable
+from observable_primitives.base import Observable
 
 
 class ObservableNumeric(Observable):
