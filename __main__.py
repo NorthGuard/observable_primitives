@@ -11,65 +11,30 @@ observer = HoldNumericPrintObserver([obs_int, obs_float, obs_complex, obs_bool])
 
 # Binary operators
 binary = [
-    "+",
-    "-",
-    "*",
-    "@",
-    "/",
-    "//",
-    "%",
-    "**",
-    "<<",
-    ">>",
-    "&",
-    "^",
-    "|"
+    "+", "-", "*", "@", "/", "//", "%", "**", "<<", ">>", "&", "^", "|"
 ]
 binary_functions = [
-    "divmod",
-    "pow",
+    "divmod", "pow",
 ]
 
 # Unary operators
 unary = [
-    "-",
-    "+",
-    "abs",
-    "~",
-    "complex",
-    "int",
-    "float",
-    "round",
-    "str",
-    "repr",
-    "bytes",
-    "hash",
+    "-", "+", "abs", "~", "complex", "int", "float", "round", "str", "repr", "bytes", "hash",
 ]
 
 # Augmented operators
 augmented = [
-    "+=",
-    "-=",
-    "*=",
-    "@=",
-    "/=",
-    "//=",
-    "%=",
-    "**=",
-    "<<=",
-    ">>=",
-    "&=",
-    "^=",
-    "|="
+    "+=", "-=", "*=", "@=", "/=", "//=", "%=", "**=", "<<=", ">>=", "&=", "^=", "|="
 ]
 
 # Class tests
-classes = [obs_int, obs_float, obs_complex, obs_bool]
-classes_names = ["obs_int", "obs_float", "obs_complex", "obs_bool"]
+variables = [obs_int, obs_float, obs_complex, obs_bool]
+variable_names = ["obs_int", "obs_float", "obs_complex", "obs_bool"]
+classes_names = ["ObservableInteger", "ObservableFloat", "ObservableComplex", "ObservableBool"]
 
 # Go through tests
-for obj_name, obj in zip(classes_names, classes):
-    print(f"\nTesting: {obj_name}")
+for obj_name, obj, class_name in zip(variable_names, variables, classes_names):
+    print(f"\nTesting: {class_name}")
 
     # BINARY OPERATORS
     test_number = 2
@@ -172,5 +137,5 @@ for obj_name, obj in zip(classes_names, classes):
         print(f"\tobj |= {test_number}: UNSUCCESSFUL")
 
     print("")
-    observer.print(4)
-
+    print("\tObserver observed the following updates:")
+    observer.print(indent=8)

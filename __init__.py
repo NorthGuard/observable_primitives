@@ -6,3 +6,4 @@ from observable_primitives.observables.float import ObservableFloat
 from observable_primitives.observables.integer import ObservableInteger
 from observable_primitives.observers.condition_integer import IntegerConditionObserver, CounterConditionObserver
 from observable_primitives.observers.condition_float import FloatConditionObserver
+from observable_primitives.base import Observer, Observable
