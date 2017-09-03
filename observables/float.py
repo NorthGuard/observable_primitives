@@ -1,7 +1,9 @@
+from typing import SupportsInt, SupportsFloat, SupportsRound, SupportsComplex, SupportsAbs
+
 from observable_primitives.observables.numeric_base import ObservableNumeric
 
 
-class ObservableFloat(ObservableNumeric):
+class ObservableFloat(ObservableNumeric, SupportsInt, SupportsFloat, SupportsRound, SupportsComplex, SupportsAbs):
     def __init__(self, val=0.0):
         """
         A float which is observable.

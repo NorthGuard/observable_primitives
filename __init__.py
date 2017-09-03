@@ -1,9 +1,9 @@
-from observable_primitives.observers.debug_observers import NumericPrintObserver, HoldNumericPrintObserver, \
-    PrintObserver
-from observable_primitives.observables.bool import ObservableBool
-from observable_primitives.observables.complex import ObservableComplex
-from observable_primitives.observables.float import ObservableFloat
-from observable_primitives.observables.integer import ObservableInteger
-from observable_primitives.observers.condition_integer import IntegerConditionObserver, CounterConditionObserver
-from observable_primitives.observers.condition_float import FloatConditionObserver
+# Base
 from observable_primitives.base import Observer, Observable
+# Observables
+from observable_primitives.observables import ObservableBool, ObservableComplex, \
+    ObservableFloat, ObservableInteger
+
+# Observers
+from observable_primitives.observers import IntegerConditionObserver, CounterConditionObserver, \
+    FloatConditionObserver, NumericPrintObserver, HoldNumericPrintObserver, PrintObserver

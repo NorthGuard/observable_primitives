@@ -1,9 +1,10 @@
-from typing import Callable
+from typing import Callable, SupportsInt, SupportsFloat, SupportsRound, SupportsComplex, SupportsAbs, SupportsBytes
 
 from observable_primitives.observables.numeric_base import ObservableNumeric
 
 
-class ObservableInteger(ObservableNumeric):
+class ObservableInteger(ObservableNumeric, SupportsInt, SupportsFloat, SupportsRound, SupportsComplex, SupportsAbs,
+                        SupportsBytes):
     def __init__(self, val=0, final_value=None, incorrect_type_handler="round"):
         """
         An integer which is observable.
@@ -29,7 +30,6 @@ class ObservableInteger(ObservableNumeric):
 
     def __rpow__(self, power, modulo=None):
         return pow(power, self._val, modulo)
-
 
     # Arithmetics: Divisions and Modulo
 
@@ -87,21 +87,21 @@ class ObservableInteger(ObservableNumeric):
 
     # Representation
 
-    def __bytes__(self):
+    def __bytes__(self) -> bytes:
         return bytes(self._val)
 
     # Conversions
 
-    def __complex__(self):
+    def __complex__(self) -> complex:
         return complex(self._val)
 
-    def __int__(self):
+    def __int__(self) -> int:
         return int(self._val)
 
-    def __float__(self):
+    def __float__(self) -> float:
         return float(self._val)
 
-    def __round__(self, n=None):
+    def __round__(self, n=None) -> round:
         return round(self._val, n)
 
     # Augmented arithmetics

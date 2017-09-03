@@ -1,7 +1,9 @@
+from typing import SupportsInt, SupportsFloat, SupportsRound, SupportsComplex, SupportsBytes, SupportsAbs
+
 from observable_primitives.observables.numeric_base import ObservableNumeric
 
 
-class ObservableBool(ObservableNumeric):
+class ObservableBool(ObservableNumeric, SupportsInt, SupportsFloat, SupportsRound, SupportsComplex, SupportsAbs):
     def __init__(self, val):
         super().__init__(bool(val))
         self._val = False

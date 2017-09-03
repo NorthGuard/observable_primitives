@@ -1,7 +1,9 @@
+from typing import SupportsComplex, SupportsAbs
+
 from observable_primitives.observables.numeric_base import ObservableNumeric
 
 
-class ObservableComplex(ObservableNumeric):
+class ObservableComplex(ObservableNumeric, SupportsComplex, SupportsAbs):
     def __init__(self, val):
         """
         A complex number which is observable.
@@ -17,6 +19,9 @@ class ObservableComplex(ObservableNumeric):
 
     def __rpow__(self, power):
         return power ** self._val
+
+    def __complex__(self) -> complex:
+        return self._val
 
     # Augmented arithmetics
 
