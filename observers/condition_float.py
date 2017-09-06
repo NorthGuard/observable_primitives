@@ -40,15 +40,16 @@ class FloatConditionObserver(ConditionObserver):
         self._min_extreme = None
 
         # Initialize
-        self._initialize()
+        if observable is not None:
+            self._initialize()
 
     def _initialize(self):
         self._update_status(new_val=self._observable.val, method="ObserverInitialize", other=None, previous=None)
 
     def _relevant_settings_names(self):
         names = ["_if_less_than", "_if_more_than",
-                "_if_extreme_decrease_absolute", "_if_extreme_decrease_relative",
-                "_if_extreme_increase_absolute", "_if_extreme_increase_relative"]
+                 "_if_extreme_decrease_absolute", "_if_extreme_decrease_relative",
+                 "_if_extreme_increase_absolute", "_if_extreme_increase_relative"]
 
         relevant_names = [name for name in names
                           if getattr(self, name) is not None]

@@ -28,7 +28,8 @@ class IntegerConditionObserver(ConditionObserver):
         self._observable = observable
 
         # Initialize
-        self._initialize()
+        if observable is not None:
+            self._initialize()
 
     def _initialize(self):
         self._update_status(new_val=self._observable.val, method="ObserverInitialize", other=None, previous=None)
