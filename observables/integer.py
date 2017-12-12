@@ -20,6 +20,9 @@ class ObservableInteger(ObservableNumeric, SupportsInt, SupportsFloat, SupportsR
 
     # Unary
 
+    def __index__(self):  # For indexing in list etc.
+        return self._val
+
     def __invert__(self):
         return ~self._val
 
